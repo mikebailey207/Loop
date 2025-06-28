@@ -2,26 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(LineRenderer))]
 public class Rocket : MonoBehaviour
 {
-    //Script that handles launching the rocket with a pinball-like system
     [Header("Launch Settings")]
-    [SerializeField]
-    private float launchForceMultiplier = 10f;
+    public float launchForceMultiplier = 10f;
+    public float maxDragDistance = 5f;
 
     private Rigidbody2D rb;
+    private LineRenderer lineRenderer;
     private Vector2 dragStart;
     private bool isLaunched;
+    private bool isDragging;
+
+    private Camera cam;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        lineRenderer = GetComponent<LineRenderer>();
+        cam = Camera.main;
     }
 
     private void Start()
     {
         rb.isKinematic = true;
+        lineRenderer.enabled = false;
     }
 
     private void Update()
@@ -29,33 +35,65 @@ public class Rocket : MonoBehaviour
         if (isLaunched) return;
 
         HandleInput();
+        if (isDragging) RotateTowardMouse();
     }
 
     private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            dragStart = GetMouseWorldPosition();
+            Vector2 mousePos = GetMouseWorldPosition();
+            Collider2D hit = Physics2D.OverlapPoint(mousePos);
+            if (hit != null && hit.gameObject == gameObject)
+            {
+                isDragging = true;
+                dragStart = mousePos;
+                lineRenderer.enabled = true;
+            }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            Vector2 currentPos = GetMouseWorldPosition();
+            Vector2 clamped = Vector2.ClampMagnitude(dragStart - currentPos, maxDragDistance);
+
+            // Draw line from rocket toward drag
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, (Vector2)transform.position + clamped);
+        }
+
+        if (Input.GetMouseButtonUp(0) && isDragging)
         {
             Vector2 dragEnd = GetMouseWorldPosition();
             Vector2 launchVector = dragStart - dragEnd;
-
             Launch(launchVector);
+            isDragging = false;
+            lineRenderer.enabled = false;
         }
     }
 
     private void Launch(Vector2 force)
     {
         rb.isKinematic = false;
+        rb.freezeRotation = true; // Optional
         rb.AddForce(force * launchForceMultiplier, ForceMode2D.Impulse);
         isLaunched = true;
     }
 
+    private void RotateTowardMouse()
+    {
+        Vector2 mousePosition = GetMouseWorldPosition();
+        Vector2 direction = mousePosition - (Vector2)transform.position;
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 270f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+
     private Vector2 GetMouseWorldPosition()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return cam.ScreenToWorldPoint(Input.mousePosition);
     }
 }
