@@ -24,10 +24,12 @@ public class Rocket : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void Start()
+    void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
-        lineRenderer.enabled = false;
+
+        GravityManager.Instance.SetRocket(this);
     }
 
     private void Update()
