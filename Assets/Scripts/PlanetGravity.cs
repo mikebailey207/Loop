@@ -6,18 +6,26 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Collider2D))]
 public class PlanetGravity : MonoBehaviour
 {
+    [Header("Gravity")]
     public float gravityBaseStrength = 5f;
+
+    [Header("Resize Settings")]
     public float resizeSpeed = 0.5f;
     public float minScale = 0.5f;
     public float maxScale = 3f;
 
+    private bool dragAndDrop;
+
     private Camera cam;
     private bool isMouseOver;
+    private bool isDragging;
+    private Vector3 dragOffset;
 
     private void Start()
     {
         cam = Camera.main;
         GravityManager.Instance.RegisterPlanet(this);
+        dragAndDrop = true;
     }
 
     private void OnDestroy()
@@ -29,7 +37,23 @@ public class PlanetGravity : MonoBehaviour
     private void Update()
     {
         HandleMouseHover();
-        HandleScaling();
+        ToggleDragandDrop();
+        if (dragAndDrop)
+            HandleDragging();
+        else
+            HandleScaling();
+    }
+
+    private void ToggleDragandDrop()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            dragAndDrop = false;
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            dragAndDrop = true;
+        }
     }
 
     private void HandleMouseHover()
@@ -52,5 +76,27 @@ public class PlanetGravity : MonoBehaviour
 
         scale = Vector3.Max(Vector3.one * minScale, Vector3.Min(Vector3.one * maxScale, scale));
         transform.localScale = scale;
+    }
+
+    private void HandleDragging()
+    {
+        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPos.z = 0;
+
+        if (Input.GetMouseButtonDown(0) && isMouseOver)
+        {
+            isDragging = true;
+            dragOffset = transform.position - mouseWorldPos;
+        }
+
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            transform.position = mouseWorldPos + dragOffset;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
     }
 }
