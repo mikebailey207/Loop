@@ -118,11 +118,7 @@ public class Rocket : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Planet"))
         {
-            transform.position = startPos;
-            rb.velocity = Vector2.zero;
-            transform.localRotation = startRot;
-            isLaunched = false;
-            rb.isKinematic = true;
+            SceneManager.LoadScene(0);
         }
     }
 }
