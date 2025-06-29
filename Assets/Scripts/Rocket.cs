@@ -11,12 +11,17 @@ public class Rocket : MonoBehaviour
     private float launchForceMultiplier = 10f;
     [SerializeField]
     private float maxDragDistance = 5f;
-
+    [Header("Audio")]
+    [SerializeField]
+    private AudioSource launchSound;
     private Rigidbody2D rb;
     private LineRenderer lineRenderer;
+
     private Vector2 dragStart;
+
     private Vector2 startPos;
     private Quaternion startRot;
+
     private bool isLaunched;
     private bool isDragging;
 
@@ -85,6 +90,7 @@ public class Rocket : MonoBehaviour
         rb.isKinematic = false;
         rb.AddForce(force * launchForceMultiplier, ForceMode2D.Impulse);
         isLaunched = true;
+        launchSound.Play();
     }
 
     private void RotateTowardMouse()
