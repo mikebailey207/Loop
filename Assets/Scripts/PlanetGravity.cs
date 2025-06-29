@@ -14,8 +14,6 @@ public class PlanetGravity : MonoBehaviour
     public float minScale = 0.5f;
     public float maxScale = 3f;
 
-    private bool dragAndDrop;
-
     private Camera cam;
     private bool isMouseOver;
     private bool isDragging;
