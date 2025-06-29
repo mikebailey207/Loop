@@ -26,7 +26,7 @@ public class PlanetGravity : MonoBehaviour
         cam = Camera.main;
         GravityManager.Instance.RegisterPlanet(this);
         
-        dragAndDrop = true;
+        
     }
     //Not sure I will be destroying the planets
     private void OnDestroy()
@@ -42,17 +42,7 @@ public class PlanetGravity : MonoBehaviour
        
     }
 
-    private void ToggleDragandDrop()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            dragAndDrop = false;
-        }
-        if(Input.GetKeyUp(KeyCode.Space))
-        {
-            dragAndDrop = true;
-        }
-    }
+   
 
     private void HandleMouseHover()
     {
