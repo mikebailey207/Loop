@@ -40,11 +40,8 @@ public class PlanetGravity : MonoBehaviour
     private void Update()
     {
         HandleMouseHover();
-        ToggleDragandDrop();
-        if (dragAndDrop)
-            HandleDragging();
-        else
-            HandleScaling();
+        HandleDragging();
+       
     }
 
     private void ToggleDragandDrop()
@@ -66,24 +63,9 @@ public class PlanetGravity : MonoBehaviour
         isMouseOver = (hit != null && hit.gameObject == gameObject);
     }
 
-    private void HandleScaling()
-    {
-        if (!isMouseOver) return;
-
-        Vector3 scale = transform.localScale;
-
-        if (Input.GetMouseButton(0))
-            scale += Vector3.one * resizeSpeed * Time.deltaTime;
-        else if (Input.GetMouseButton(1))
-            scale -= Vector3.one * resizeSpeed * Time.deltaTime;
-
-        scale = Vector3.Max(Vector3.one * minScale, Vector3.Min(Vector3.one * maxScale, scale));
-        transform.localScale = scale;
-    }
-
     private void HandleDragging()
     {
-        if (rocket.isLaunched)
+        if (rocket.isLaunched) //Drag and drop for the planets
         {
             Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;

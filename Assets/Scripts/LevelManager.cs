@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+//Script to handle levelling up, and to handle speedrunning
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
@@ -87,8 +87,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public void RestartGame()
-    {
-        Debug.Log("Hello?");
+    {   
         level = 1;
         levelText.text = "Level " + level + "/5";
         pickupsCollected = 0;
@@ -129,7 +128,7 @@ public class LevelManager : MonoBehaviour
         pickupsCollected = 0;
         levelText.text = "Level " + level + "/5";
         // Stop the timer if finishing the last level
-        // Stop the timer if finishing the last level
+ 
         if (level > finalLevel && timerRunning)
         {
             timerRunning = false;
@@ -141,12 +140,8 @@ public class LevelManager : MonoBehaviour
             {
                 PlayerPrefs.SetFloat("BestRunTime", runTimer);
                 PlayerPrefs.Save();
-                Debug.Log("New best time: " + FormatTime(runTimer));
-            }
-            else
-            {
-                Debug.Log("Best time remains: " + FormatTime(bestTime));
-            }
+               
+            }          
 
             // Show end screen
             if (endScreen != null)
