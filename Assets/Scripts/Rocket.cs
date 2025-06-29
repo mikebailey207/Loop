@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(LineRenderer))]
 public class Rocket : MonoBehaviour
@@ -77,7 +78,6 @@ public class Rocket : MonoBehaviour
     private void Launch(Vector2 force)
     {
         rb.isKinematic = false;
-        rb.freezeRotation = true; // Optional
         rb.AddForce(force * launchForceMultiplier, ForceMode2D.Impulse);
         isLaunched = true;
     }
@@ -97,5 +97,17 @@ public class Rocket : MonoBehaviour
     private Vector2 GetMouseWorldPosition()
     {
         return cam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("PickUp"))
+        {
+            Destroy(collision.gameObject);
+        }
+        if(collision.gameObject.CompareTag("Planet"))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }
