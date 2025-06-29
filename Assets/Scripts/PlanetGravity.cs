@@ -9,11 +9,6 @@ public class PlanetGravity : MonoBehaviour
     [Header("Gravity")]
     public float gravityBaseStrength = 5f;
 
-    [Header("Resize Settings")]
-    public float resizeSpeed = 0.5f;
-    public float minScale = 0.5f;
-    public float maxScale = 3f;
-
     private Camera cam;
     private bool isMouseOver;
     private bool isDragging;
@@ -25,8 +20,6 @@ public class PlanetGravity : MonoBehaviour
     {
         cam = Camera.main;
         GravityManager.Instance.RegisterPlanet(this);
-        
-        
     }
     //Not sure I will be destroying the planets
     private void OnDestroy()
@@ -41,8 +34,6 @@ public class PlanetGravity : MonoBehaviour
         HandleDragging();
        
     }
-
-   
 
     private void HandleMouseHover()
     {
