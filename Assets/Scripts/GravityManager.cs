@@ -31,14 +31,7 @@ public class GravityManager : MonoBehaviour
     {
         rocket = r;
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            LevelManager.Instance.pickupsCollected = 0;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-    }
+
     private void FixedUpdate()
     {
         if (rocket == null) return;

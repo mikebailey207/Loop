@@ -14,6 +14,7 @@ public class Rocket : MonoBehaviour
     [Header("Audio")]
     [SerializeField]
     private AudioSource launchSound;
+    
     private Rigidbody2D rb;
     private LineRenderer lineRenderer;
 

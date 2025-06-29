@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: ab2e69bec997229489eb612db863e28d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Bitcount Grid Double Cursive
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a038fccb5e47e064288b07ab6f523a94, type: 3}
+  - {fileID: 12800000, guid: 10d4bb2581c5d1c40be0b645224a5dcb, type: 3}
+  - {fileID: 12800000, guid: 4732364f0096d304dae47437fbb07ea6, type: 3}
+  - {fileID: 12800000, guid: 860eaed4b1172a14fa1395745a8c4439, type: 3}
+  - {fileID: 12800000, guid: c6d7596c17f8d0b42b4c02a00d167fa3, type: 3}
+  - {fileID: 12800000, guid: 445bb817c81a9e14388d0e9997e39e69, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
