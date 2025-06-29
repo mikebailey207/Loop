@@ -7,12 +7,16 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour
 {
     [Header("Launch Settings")]
-    public float launchForceMultiplier = 10f;
-    public float maxDragDistance = 5f;
+    [SerializeField]
+    private float launchForceMultiplier = 10f;
+    [SerializeField]
+    private float maxDragDistance = 5f;
 
     private Rigidbody2D rb;
     private LineRenderer lineRenderer;
     private Vector2 dragStart;
+    private Vector2 startPos;
+    private Quaternion startRot;
     private bool isLaunched;
     private bool isDragging;
 
@@ -29,7 +33,8 @@ public class Rocket : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
-
+        startPos = transform.position;
+        startRot = transform.localRotation;
         GravityManager.Instance.SetRocket(this);
     }
 
@@ -107,7 +112,11 @@ public class Rocket : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Planet"))
         {
-            SceneManager.LoadScene(0);
+            transform.position = startPos;
+            rb.velocity = Vector2.zero;
+            transform.localRotation = startRot;
+            isLaunched = false;
+            rb.isKinematic = true;
         }
     }
 }
