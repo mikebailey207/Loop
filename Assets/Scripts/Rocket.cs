@@ -22,7 +22,7 @@ public class Rocket : MonoBehaviour
     private Vector2 startPos;
     private Quaternion startRot;
 
-    private bool isLaunched;
+    public bool isLaunched;
     private bool isDragging;
 
     private Camera cam;
@@ -114,11 +114,13 @@ public class Rocket : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("PickUp"))
         {
+            LevelManager.Instance.CollectPickup();
             Destroy(collision.gameObject);
         }
         if(collision.gameObject.CompareTag("Planet"))
         {
-            SceneManager.LoadScene(0);
+            LevelManager.Instance.pickupsCollected = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

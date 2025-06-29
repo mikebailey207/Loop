@@ -35,7 +35,8 @@ public class GravityManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(0);
+            LevelManager.Instance.pickupsCollected = 0;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
     private void FixedUpdate()

@@ -20,14 +20,17 @@ public class PlanetGravity : MonoBehaviour
     private bool isMouseOver;
     private bool isDragging;
     private Vector3 dragOffset;
+    [SerializeField]
+    Rocket rocket;
 
     private void Start()
     {
         cam = Camera.main;
         GravityManager.Instance.RegisterPlanet(this);
+        
         dragAndDrop = true;
     }
-
+    //Not sure I will be destroying the planets
     private void OnDestroy()
     {
         if (GravityManager.Instance != null)
@@ -80,23 +83,26 @@ public class PlanetGravity : MonoBehaviour
 
     private void HandleDragging()
     {
-        Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPos.z = 0;
-
-        if (Input.GetMouseButtonDown(0) && isMouseOver)
+        if (rocket.isLaunched)
         {
-            isDragging = true;
-            dragOffset = transform.position - mouseWorldPos;
-        }
+            Vector3 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = 0;
 
-        if (Input.GetMouseButton(0) && isDragging)
-        {
-            transform.position = mouseWorldPos + dragOffset;
-        }
+            if (Input.GetMouseButtonDown(0) && isMouseOver)
+            {
+                isDragging = true;
+                dragOffset = transform.position - mouseWorldPos;
+            }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
+            if (Input.GetMouseButton(0) && isDragging)
+            {
+                transform.position = mouseWorldPos + dragOffset;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+            }
         }
     }
 }
