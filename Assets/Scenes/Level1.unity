@@ -469,9 +469,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityBaseStrength: 250
-  resizeSpeed: 5
-  minScale: 0.5
-  maxScale: 10
   rocket: {fileID: 1101485623}
 --- !u!212 &374130135
 SpriteRenderer:
@@ -7250,9 +7247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityBaseStrength: 250
-  resizeSpeed: 5
-  minScale: 0.5
-  maxScale: 10
   rocket: {fileID: 1101485623}
 --- !u!212 &1109804337
 SpriteRenderer:
@@ -8246,9 +8240,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravityBaseStrength: 250
-  resizeSpeed: 5
-  minScale: 0.5
-  maxScale: 10
   rocket: {fileID: 0}
 --- !u!212 &1696016578
 SpriteRenderer:
